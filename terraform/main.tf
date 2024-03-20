@@ -27,7 +27,7 @@ resource "docker_service" "app" {
 
   task_spec {
     container_spec {
-      image = "app_image"
+      image = "nginx:latest"
     }
   }
 }
@@ -37,7 +37,7 @@ resource "docker_service" "db" {
 
   task_spec {
     container_spec {
-      image = "db_image"
+      image = "mysql:5.7"
     }
   }
 }
@@ -47,7 +47,16 @@ resource "docker_service" "web" {
 
   task_spec {
     container_spec {
-      image = "web_image"
+      image = "nginx:latest"
+    }
+  }
+
+  mode {
+    replicated {
+      replicas = 3
     }
   }
 }
+
+
+

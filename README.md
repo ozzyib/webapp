@@ -1,12 +1,103 @@
-# webapp
+```markdown
+# Docker Swarm Deployment with Terraform
+
+This repository contains a Terraform configuration for deploying a Docker Swarm cluster.
+
+## Prerequisites
+
+- Docker installed on your machine
+- Terraform v0.12 or later
+
+## Docker Images
+
+The configuration uses the following Docker images:
+
+- `nginx:latest` for the app and web services
+- `mysql:5.7` for the db service
+
+Ensure these images are available in your Docker environment.
+
+## Usage
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/ozzyib/webapp.git
+```
+
+2. Navigate to the repository directory:
+
+```bash
+cd yourrepository
+```
+
+3. Initialize Terraform:
+
+```bash
+terraform init
+```
+
+4. Apply the Terraform configuration:
+
+```bash
+terraform apply
+```
+
+Terraform will output the IDs of the created resources.
+
+## Services
+
+The configuration deploys the following services:
+
+- `app`: A service running the `nginx:latest` Docker image
+- `db`: A service running the `mysql:5.7` Docker image
+- `web`: A service running the `nginx:latest` Docker image, with 3 replicas
+
+Each service is connected to a Docker network named `webapp_network`.
 
 
-Docker Swarm vs. Standalone Docker: Your Terraform configuration is set up to deploy Docker services using the Docker provider. This configuration is suitable for deploying services to a Docker Swarm cluster. If you're using standalone Docker without Swarm, you may need to adjust the provider configuration accordingly.
 
-Image Names: The image names you've used (app_image, db_image, web_image) should correspond to the actual names of the Docker images you've built or obtained. Ensure that these image names match the names used in your Docker Compose file or the images available in your Docker registry.
+```markdown
+## Docker Commands
 
-Network Configuration: The Docker network resource you've defined (docker_network.webapp_network) creates a Docker network named webapp_network, which your Docker services (app, db, web) are connected to. This ensures that the services can communicate with each other over this network.
+Here are some Docker commands you might find useful:
 
-Dependency Management: You've correctly specified dependencies between services using the depends_on attribute. This ensures that the app service starts only after the db service is up and running, as specified.
+- **Pull Docker images**: Before running the Terraform configuration, ensure the necessary Docker images are available in your Docker environment:
 
-Host Address: The host attribute in the Docker provider configuration specifies the address of the Docker daemon. The value tcp://127.0.0.1:2375 indicates that Terraform communicates with the Docker daemon over TCP on localhost and port 2375. Make sure this matches the configuration of your Docker daemon.
+  ```bash
+  docker pull nginx:latest
+  docker pull mysql:5.7
+  ```
+
+- **List Docker services**: After applying the Terraform configuration, you can list the running Docker services:
+
+  ```bash
+  docker service ls
+  ```
+
+- **Inspect a Docker service**: To inspect a Docker service and see its details:
+
+  ```bash
+  docker service inspect <service_name>
+  ```
+
+  Replace `<service_name>` with the name of the service you want to inspect (e.g., `app`, `db`, or `web`).
+
+- **View logs for a Docker service**: To view the logs for a Docker service:
+
+  ```bash
+  docker service logs <service_name>
+  ```
+
+  Replace `<service_name>` with the name of the service whose logs you want to view.
+
+- **Remove a Docker service**: To remove a Docker service:
+
+  ```bash
+  docker service rm <service_name>
+  ```
+
+  Replace `<service_name>` with the name of the service you want to remove. Note that this will stop and remove the service, and it should be used with caution.
+```
+
+These commands should help you manage the Docker services created by the Terraform configuration.
