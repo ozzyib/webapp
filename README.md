@@ -49,7 +49,7 @@ Terraform will output the IDs of the created resources.
 
 The configuration deploys the following services:
 
-- `app`: A service running the `nginx:latest` Docker image
+- `app`: A service running the `node:latest` Docker image
 - `db`: A service running the `mysql:5.7` Docker image
 - `web`: A service running the `nginx:latest` Docker image, with 3 replicas
 
@@ -65,6 +65,7 @@ Here are some Docker commands you might find useful:
 - **Pull Docker images**: Before running the Terraform configuration, ensure the necessary Docker images are available in your Docker environment:
 
   ```bash
+  docker pull node:latest
   docker pull nginx:latest
   docker pull mysql:5.7
   ```
